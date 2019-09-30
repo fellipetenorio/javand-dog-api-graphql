@@ -15,7 +15,7 @@ public class DogController {
         this.dogService = dogService;
     }
 
-    @RequestMapping("/dogs")
+    @RequestMapping("/dogs2")
     public Iterable<Dog> findAllDogs() {
         return dogService.findAllDogs();
     }
