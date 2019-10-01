@@ -3,16 +3,23 @@ package com.tenorio.javand.dogapi.dogapigraphql.webservice;
 import com.tenorio.javand.dogapi.dogapigraphql.entity.Dog;
 import com.tenorio.javand.dogapi.dogapigraphql.entity.Joke;
 import com.tenorio.javand.dogapi.dogapigraphql.service.DogService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
+import java.util.List;
 
 @RestController
+@ApiResponses(value = {
+        @ApiResponse(code = 400, message = "This is error 400"),
+        @ApiResponse(code = 401, message = "This is error 401"),
+        @ApiResponse(code = 500, message = "This is error 500")
+})
 public class DogController {
     private DogService dogService;
     private RestTemplate restTemplate;
@@ -22,13 +29,13 @@ public class DogController {
         this.dogService = dogService;
     }
 
-    @RequestMapping("/dogs2")
-    public Iterable<Dog> findAllDogs() {
+    @GetMapping("/dogs2")
+    public List<Dog> findAllDogs() {
         return dogService.findAllDogs();
     }
 
-    @RequestMapping("/myapi")
-    public Joke getApi(RestTemplate restTemplate) {
+    @GetMapping("/myapi")
+    public Joke getApi() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
 
         factory.setConnectTimeout(3000);
